@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: FlexThemeData.light(scheme: FlexScheme.amber),
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.amber),
+      theme: FlexThemeData.light(scheme: FlexScheme.aquaBlue),
+      darkTheme: FlexThemeData.dark(scheme: FlexScheme.aquaBlue),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

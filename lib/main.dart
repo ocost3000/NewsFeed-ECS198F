@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:news_feed/rss_feed_item.dart';
 
 void main() {
   runApp(const MyApp());
@@ -65,89 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: RssFeedItems.length,
         itemBuilder: (context, index) => RssFeedItems[index],
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Favorites',
-          )
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class RssFeedItem extends StatelessWidget {
-  // Widget (View) for Card Item
-  final String title;
-  final String subtitle;
-  final String imageURL;
-
-  const RssFeedItem(
-      {Key? key,
-      required this.title,
-      required this.subtitle,
-      required this.imageURL})
-      : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const SizedBox(height: 8),
-            Image.network(
-              imageURL,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset('images/rss.png',
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.contain);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.rss_feed_outlined),
-              title: Text(title),
-              subtitle: Text(subtitle),
-            ),
-            // const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(
-                  child: const Text('ADD TO FAVORITES'),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
-                TextButton(
-                  child: const Text('READ'),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
-              ],
-            ),
-            // const Spacer(),
-          ],
-        ),
       ),
     );
   }

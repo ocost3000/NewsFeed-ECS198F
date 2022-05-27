@@ -51,12 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
     final RssFeedItems = List<RssFeedCard>.generate(
         4,
         (int index) => RssFeedCard(
-              title: "UN News ${index + 1}",
-              subtitle: "Global perspective, human stories ${index + 1}",
-              imageURL:
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/640px-Flag_of_the_United_Nations.svg.png",
-              idx: index
-            ),
+            title: "UN News ${index + 1}",
+            subtitle: "Global perspective, human stories ${index + 1}",
+            imageURL:
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/640px-Flag_of_the_United_Nations.svg.png",
+            idx: index),
         growable: true);
 
     return Scaffold(
@@ -68,10 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, index) => RssFeedItems[index],
       ),
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        icon: Icon(Icons.login),
+        label: Text("Sign In"),
       ), // This trailing comma makes auto-formatting nicer for build methods.
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -94,4 +94,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

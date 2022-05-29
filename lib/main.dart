@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:news_feed/rss_feed_item.dart';
+import 'package:news_feed/article_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,9 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final RssFeedItems = List<RssFeedItem>.generate(
+    final RssFeedItems = List<ArticleCard>.generate(
         4,
-        (int index) => RssFeedItem(
+        (int index) => ArticleCard(
               title: "UN News ${index + 1}",
               subtitle: "Global perspective, human stories ${index + 1}",
               imageURL:

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:news_feed/rss_feed_card.dart';
+import 'package:news_feed/article_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,14 +48,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final RssFeedItems = List<RssFeedCard>.generate(
+    final RssFeedItems = List<ArticleCard>.generate(
         4,
-        (int index) => RssFeedCard(
-            title: "UN News ${index + 1}",
-            subtitle: "Global perspective, human stories ${index + 1}",
-            imageURL:
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/640px-Flag_of_the_United_Nations.svg.png",
-            idx: index),
+        (int index) => ArticleCard(
+              title: "UN News ${index + 1}",
+              subtitle: "Global perspective, human stories ${index + 1}",
+              imageURL:
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/640px-Flag_of_the_United_Nations.svg.png",
+            ),
         growable: true);
 
     return Scaffold(
@@ -66,30 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: RssFeedItems.length,
         itemBuilder: (context, index) => RssFeedItems[index],
       ),
-
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        icon: Icon(Icons.login),
-        label: Text("Sign In"),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Favorites',
-          )
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        child: const Icon(Icons.add),
       ),
     );
   }

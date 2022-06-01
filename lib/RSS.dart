@@ -11,11 +11,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class RSS {
   String FEED_URL = "";
-  final String title = 'RSS Feed Demo';
+  String title = '';
   int num_articles = 0;
   List<Article> articles = [];
 
-  RSS({required this.FEED_URL}) {}
+  RSS({required this.FEED_URL, required this.title}) {}
 
   Future<RssFeed?> _loadFeed() async {
     try {

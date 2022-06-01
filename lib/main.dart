@@ -3,24 +3,46 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:news_feed/Article.dart';
 import 'package:news_feed/RSS.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
-  final RSS UN_topSource =
-      RSS(FEED_URL: "https://news.un.org/feed/subscribe/en/news/all/rss.xml");
+  final RSS UN_topSource = RSS(
+      FEED_URL: "https://news.un.org/feed/subscribe/en/news/all/rss.xml",
+      title: "UN Top Stories");
   final RSS Americas = RSS(
       FEED_URL:
-          "https://news.un.org/feed/subscribe/en/news/region/americas/feed/rss.xml");
+          "https://news.un.org/feed/subscribe/en/news/region/americas/feed/rss.xml",
+      title: "Americas");
   final RSS Health = RSS(
       FEED_URL:
-          "https://news.un.org/feed/subscribe/en/news/topic/health/feed/rss.xml");
+          "https://news.un.org/feed/subscribe/en/news/topic/health/feed/rss.xml",
+      title: "Health");
   final RSS Women = RSS(
       FEED_URL:
-          "https://news.un.org/feed/subscribe/en/news/topic/women/feed/rss.xml");
+          "https://news.un.org/feed/subscribe/en/news/topic/women/feed/rss.xml",
+      title: "Women");
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Create a new provider
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+  }
 
   // This widget is the root of your application.
   @override
@@ -39,13 +61,17 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: MaterialButton(
-          child: Text("Press Me"),
-          onPressed: (() async {
-            List<Article>? topSources = await UN_topSource.getFeeds();
-            // log(topSources![10].title);
-            // log(UN_topSource.num_articles.toString());
-          }),
+        home: Scaffold(
+          body: (MaterialButton(
+            child: Text("Press Me"),
+            onPressed: (() async {
+              signInWithGoogle();
+              log("logged in");
+              List<Article>? topSources = await UN_topSource.getFeeds();
+              // log(topSources![10].title);
+              // log(UN_topSource.num_articles.toString());
+            }),
+          )),
         ));
   }
 }
@@ -70,6 +96,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  User? _user;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {
+        _user = user;
+      });
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -90,6 +127,14 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    //UI TEAM:::: here you change UI based on if user is signed in
+    if (_user == null) {
+      log("not signed into google!");
+    } else {
+      log("signed into google!");
+    }
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by

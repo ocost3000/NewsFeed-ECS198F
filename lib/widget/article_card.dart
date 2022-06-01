@@ -16,16 +16,18 @@ class ArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: InkWell(
-        onTap: () async{
+        onTap: () async {
           // TODO: open article.link in external browser
-          if(!await launchUrl(article.link)) throw 'Could not launch $article.link';
+          if (!await launchUrl(article.link)) {
+            throw 'Could not launch ${article.link}';
+          }
         },
+        // NOTE: This guy might need to be reevaluated
         child: SizedBox(
           height: 330,
           child: Card(
             margin:
                 const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-            // NOTE: perhaps wrap with padding?
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.max,
@@ -45,8 +47,6 @@ class ArticleCard extends StatelessWidget {
                     },
                   ),
                 ),
-                // TODO: this listtile cannot be infinitely long...
-                // will need wrap
                 const SizedBox(
                   height: 8,
                 ),
@@ -76,7 +76,6 @@ class ArticleCard extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              // TODO: make this Date a variable
                               Text(
                                 article.pubString,
                                 style: TextStyle(

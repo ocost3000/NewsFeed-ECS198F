@@ -13,11 +13,12 @@ class ArticleListView extends StatefulWidget {
 }
 
 class ArticleListViewState extends State<ArticleListView> {
+  // NOTE: hardcoded testing articles
   final List<Article> _arts = TestArticles.articles;
 
   @override
   Widget build(BuildContext context) {
-    final ArticleCards = List<ArticleCard>.generate(
+    final articleCards = List<ArticleCard>.generate(
         _arts.length, (int index) => ArticleCard(article: _arts[index]),
         growable: true);
 
@@ -26,8 +27,8 @@ class ArticleListViewState extends State<ArticleListView> {
         title: Text(widget.RssFeed),
       ),
       body: ListView.builder(
-        itemCount: ArticleCards.length,
-        itemBuilder: (context, index) => ArticleCards[index],
+        itemCount: articleCards.length,
+        itemBuilder: (context, index) => articleCards[index],
       ),
       floatingActionButton: const BookmarkFAB(
         isLoggedIn: false,

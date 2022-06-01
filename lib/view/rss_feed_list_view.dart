@@ -3,12 +3,14 @@ import 'package:news_feed/widget/fab.dart';
 import 'package:news_feed/widget/rss_feed_card.dart';
 
 class RssFeedListView extends StatelessWidget {
+  /// Uses ListView to display all RSS Feed sources
   const RssFeedListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final rssFeedItems = List<RssFeedCard>.generate(
         4,
+        // TODO: Implement Rss Class
         (int index) => RssFeedCard(
             title: "UN News ${index + 1}",
             subtitle: "Global perspective, human stories ${index + 1}",

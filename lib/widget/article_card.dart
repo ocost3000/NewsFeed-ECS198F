@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:news_feed/data/article.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'article_bookmark_button.dart';
 
@@ -13,8 +16,9 @@ class ArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: InkWell(
-        onTap: () {
+        onTap: () async{
           // TODO: open article.link in external browser
+          if(!await launchUrl(article.link)) throw 'Could not launch $article.link';
         },
         child: SizedBox(
           height: 330,

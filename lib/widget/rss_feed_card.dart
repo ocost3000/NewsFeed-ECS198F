@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:news_feed/view/article_list_view.dart';
+
+import '../data/article.dart';
+import '../testing/test_articles.dart';
 
 class RssFeedCard extends StatelessWidget {
   // Widget (View) for Card Item
@@ -21,6 +25,10 @@ class RssFeedCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           print("Clicked RSS №$idx");
+          // TODO: make feed-specific (with async request and loading page)
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ArticleListView(RssFeed: "Articles");
+          }));
         },
         child: Card(
           child: Column(

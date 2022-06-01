@@ -7,7 +7,7 @@ class RssFeedListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RssFeedItems = List<RssFeedCard>.generate(
+    final rssFeedItems = List<RssFeedCard>.generate(
         4,
         (int index) => RssFeedCard(
             title: "UN News ${index + 1}",
@@ -22,10 +22,10 @@ class RssFeedListView extends StatelessWidget {
         title: const Text("RSS Feeds"),
       ),
       body: ListView.builder(
-        itemCount: RssFeedItems.length,
-        itemBuilder: (context, index) => RssFeedItems[index],
+        itemCount: rssFeedItems.length,
+        itemBuilder: (context, index) => rssFeedItems[index],
       ),
-      floatingActionButton: BookmarkFAB(
+      floatingActionButton: const BookmarkFAB(
         isLoggedIn: false,
       ),
     );

@@ -16,7 +16,7 @@ class Article {
   }
 
   String getDate() {
-    /// Parses publication date to get string for card use
+    /// Parses DateTime date to get string for card use
     /// Example: "April 1st, 2021 — 12 days ago"
     String month = getMonth(pubDate.month);
     String day = getDay(pubDate.day);

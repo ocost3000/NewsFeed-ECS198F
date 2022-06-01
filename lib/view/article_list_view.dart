@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:news_feed/data/article.dart';
+import 'package:news_feed/testing/test_articles.dart';
 import 'package:news_feed/widget/article_card.dart';
 import 'package:news_feed/widget/fab.dart';
 
-class ArticleListView extends StatelessWidget {
-  const ArticleListView({Key? key, required this.title}) : super(key: key);
+class ArticleListView extends StatefulWidget {
+  final String RssFeed;
+  const ArticleListView({Key? key, required this.RssFeed}) : super(key: key);
 
-  final String title;
+  @override
+  State<ArticleListView> createState() => ArticleListViewState();
+}
+
+class ArticleListViewState extends State<ArticleListView> {
+  final List<Article> _arts = TestArticles.articles;
 
   @override
   Widget build(BuildContext context) {
-    final RssFeedItems = List<ArticleCard>.generate(
-        4,
-        (int index) => ArticleCard(
-              title: "UN News ${index + 1}",
-              subtitle: "Global perspective, human stories ${index + 1}",
-              imageURL:
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/640px-Flag_of_the_United_Nations.svg.png",
-            ),
+    final ArticleCards = List<ArticleCard>.generate(
+        _arts.length, (int index) => ArticleCard(article: _arts[index]),
         growable: true);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.RssFeed),
       ),
       body: ListView.builder(
-        itemCount: RssFeedItems.length,
-        itemBuilder: (context, index) => RssFeedItems[index],
+        itemCount: ArticleCards.length,
+        itemBuilder: (context, index) => ArticleCards[index],
       ),
       floatingActionButton: const BookmarkFAB(
         isLoggedIn: false,

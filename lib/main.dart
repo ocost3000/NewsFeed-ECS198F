@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: FlexThemeData.light(scheme: FlexScheme.aquaBlue),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.aquaBlue),
       home: const RssFeedListView(),

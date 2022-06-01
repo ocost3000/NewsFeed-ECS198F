@@ -17,7 +17,7 @@ class ArticleCard extends StatelessWidget {
     return Center(
       child: InkWell(
         onTap: () async {
-          // TODO: open article.link in external browser
+          // modify if time permits to make this launch app
           if (!await launchUrl(article.link)) {
             throw 'Could not launch ${article.link}';
           }

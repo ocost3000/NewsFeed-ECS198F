@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:news_feed/Article.dart';
 import 'package:news_feed/RSS.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:news_feed/testing/test_rss_feeds.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -19,23 +20,9 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-  final RSS UN_topSource = RSS(
-      FEED_URL: "https://news.un.org/feed/subscribe/en/news/all/rss.xml",
-      title: "UN Top Stories");
-  final RSS Americas = RSS(
-      FEED_URL:
-          "https://news.un.org/feed/subscribe/en/news/region/americas/feed/rss.xml",
-      title: "Americas");
-  final RSS Health = RSS(
-      FEED_URL:
-          "https://news.un.org/feed/subscribe/en/news/topic/health/feed/rss.xml",
-      title: "Health");
-  final RSS Women = RSS(
-      FEED_URL:
-          "https://news.un.org/feed/subscribe/en/news/topic/women/feed/rss.xml",
-      title: "Women");
+  final List<RSS> rssFeeds = TestRSSFeeds.rssFeeds;
 
+  MyApp({Key? key}) : super(key: key);
   Future<UserCredential> signInWithGoogle() async {
     // Create a new provider
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
@@ -67,7 +54,8 @@ class MyApp extends StatelessWidget {
             onPressed: (() async {
               signInWithGoogle();
               log("logged in");
-              List<Article>? topSources = await UN_topSource.getFeeds();
+              // TODO: test out with all list of Rss feeds
+              List<Article>? topSources = await rssFeeds[0].getFeeds();
               // log(topSources![10].title);
               // log(UN_topSource.num_articles.toString());
             }),
@@ -121,13 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-
     //UI TEAM:::: here you change UI based on if user is signed in
     if (_user == null) {
       log("not signed into google!");

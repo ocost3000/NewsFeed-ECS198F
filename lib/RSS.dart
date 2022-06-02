@@ -10,17 +10,18 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class RSS {
-  String FEED_URL = "";
-  String title = '';
-  int num_articles = 0;
+  /// Wrapper for RssFeed class
+  final String feedUrl;
+  final String title;
+  int numArticles = 0;
   List<Article> articles = [];
 
-  RSS({required this.FEED_URL, required this.title}) {}
+  RSS({required this.feedUrl, required this.title}) {}
 
   Future<RssFeed?> _loadFeed() async {
     try {
       final client = http.Client();
-      final response = await client.get(Uri.parse(FEED_URL));
+      final response = await client.get(Uri.parse(feedUrl));
 
       log(RssFeed.parse(response.body).items![10].title.toString());
       log(RssFeed.parse(response.body).items!.length.toString());
@@ -35,8 +36,8 @@ class RSS {
   Future<List<Article>?> getFeeds() async {
     try {
       RssFeed? body = await _loadFeed();
-      num_articles = body!.items!.length.toInt();
-      for (int i = 0; i < num_articles; i++) {
+      numArticles = body!.items!.length.toInt();
+      for (int i = 0; i < numArticles; i++) {
         articles.add(Article(
             title: body.items![i].title.toString(),
             link: Uri.parse(body.items![i].link.toString()),
@@ -49,6 +50,5 @@ class RSS {
       log("Break when trying to get feeds");
       throw e;
     }
-    return null;
   }
 }

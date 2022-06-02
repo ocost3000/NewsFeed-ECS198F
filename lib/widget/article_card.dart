@@ -83,7 +83,7 @@ class ArticleCard extends StatelessWidget {
                                   color: Colors.grey[500],
                                 ),
                               ),
-                              ArticleBookmarkButton(),
+                              ArticleBookmarkButton(article: article, authUserId: 999,),
                             ],
                           ),
                         ),

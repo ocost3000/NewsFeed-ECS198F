@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "462293184464",
+    "project_id": "newsfeed-ecs198f",
+    "storage_bucket": "newsfeed-ecs198f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462293184464:android:e930e1c46df046003f13d5",
+        "android_client_info": {
+          "package_name": "com.example.news_feed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462293184464-6gptt2m5f38m7i4o5dk47do28hitf2uo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj7a8xTSmvzQPDwZodkHhG2e40Vdqx3AE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462293184464-6gptt2m5f38m7i4o5dk47do28hitf2uo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "462293184464-ammmp4uf3384t84mjt1v9ieamh3avffb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.newsFeed"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,25 +15,6 @@ class Article {
     pubString = getDate();
   }
 
-  Article.fromMap(Map<String, dynamic> result)
-      : title = result["title"],
-        link = result["link"],
-        description = result["description"],
-        imgURL = result["imgURL"],
-        pubDate = result["pubDate"],
-        pubString = result["pubString"];
-
-  Map<String, Object> toMap() {
-    return {
-      'title': title,
-      'link': link,
-      'description': description,
-      'imgURL': imgURL,
-      'pubDate': pubDate,
-      'pubString': pubString
-    };
-  }
-
   String getDate() {
     /// Parses DateTime date to get string for card use
     /// Example: "April 1st, 2021 — 12 days ago"

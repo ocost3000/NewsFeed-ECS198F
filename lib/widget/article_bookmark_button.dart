@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 class ArticleBookmarkButton extends StatefulWidget {
   const ArticleBookmarkButton({Key? key}) : super(key: key);

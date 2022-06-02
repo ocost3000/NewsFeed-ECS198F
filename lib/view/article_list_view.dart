@@ -3,12 +3,17 @@ import 'package:news_feed/data/article.dart';
 import 'package:news_feed/testing/test_articles.dart';
 import 'package:news_feed/widget/article_card.dart';
 import 'package:news_feed/widget/fab.dart';
+import 'package:news_feed/widget/sign_in_status.dart';
 
 class ArticleListView extends StatefulWidget {
+  final SignInStatus status;
+  final BookmarkFAB? bookmarkFab;
   final String feedName;
-  final bool isFavorites;
   const ArticleListView(
-      {Key? key, required this.feedName, required this.isFavorites})
+      {Key? key,
+      required this.feedName,
+      required this.status,
+      required this.bookmarkFab})
       : super(key: key);
 
   @override
@@ -28,12 +33,15 @@ class ArticleListViewState extends State<ArticleListView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.feedName),
+        actions: [
+          widget.status,
+        ],
       ),
       body: ListView.builder(
         itemCount: articleCards.length,
         itemBuilder: (context, index) => articleCards[index],
       ),
-      floatingActionButton: widget.isFavorites ? null : const BookmarkFAB(),
+      floatingActionButton: widget.bookmarkFab,
     );
   }
 }

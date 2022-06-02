@@ -1,9 +1,7 @@
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:news_feed/services/firebase_helper.dart';
 
 class BookmarkFAB extends StatefulWidget {
   const BookmarkFAB({Key? key}) : super(key: key);
@@ -14,44 +12,18 @@ class BookmarkFAB extends StatefulWidget {
 
 class _BookmarkFABState extends State<BookmarkFAB> {
   User? _user;
-  late void Function() fireOnPressFunc = () => log("Uninitialized fireFunc");
-  late String fireToolTip;
-  late Icon fireButtonIcon;
+  void Function() _onPressed = () => log("Uninitialized fireFunc");
+  String _tooltip = "Placeholder";
+  Icon _icon = const Icon(Icons.abc_outlined);
 
-  void loginRequest() {
+  void _loginRequest() {
     log("Ask to login");
-    signInWithGoogle();
+    FirebaseHelper.signInWithGoogle();
   }
 
-  void goToBookmarks() {
+  void _goToBookmarks() {
     log("Go to bookmarks");
     Navigator.pushNamed(context, '/bookmarks');
-  }
-
-  static Future<UserCredential> signInWithGoogle() async {
-    if (kIsWeb) {
-      // Create a new provider
-      GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithPopup(googleProvider);
-    } else {
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
-    }
   }
 
   @override
@@ -61,15 +33,15 @@ class _BookmarkFABState extends State<BookmarkFAB> {
           _user = user;
           if (_user == null) {
             // not logged in
-            fireOnPressFunc = loginRequest;
-            fireToolTip = "Log in here";
-            fireButtonIcon = Icon(Icons.person,
+            _onPressed = _loginRequest;
+            _tooltip = "Log in here";
+            _icon = Icon(Icons.person,
                 color: Theme.of(context).colorScheme.onSecondary);
           } else {
             // logged in
-            fireOnPressFunc = goToBookmarks;
-            fireToolTip = "Bookmarks";
-            fireButtonIcon = Icon(Icons.bookmark,
+            _onPressed = _goToBookmarks;
+            _tooltip = "Bookmarks";
+            _icon = Icon(Icons.bookmark,
                 color: Theme.of(context).colorScheme.onSecondary);
           }
         }));
@@ -78,9 +50,9 @@ class _BookmarkFABState extends State<BookmarkFAB> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: fireOnPressFunc,
-      tooltip: fireToolTip,
-      child: fireButtonIcon,
+      onPressed: _onPressed,
+      tooltip: _tooltip,
+      child: _icon,
     );
   }
 }

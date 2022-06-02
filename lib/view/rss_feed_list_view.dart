@@ -1,16 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/widget/fab.dart';
 import 'package:news_feed/widget/rss_feed_card.dart';
 
-class RssFeedListView extends StatefulWidget {
-  /// Uses ListView to display all RSS Feed sources
+class RssFeedListView extends StatelessWidget {
   const RssFeedListView({Key? key}) : super(key: key);
 
-  @override
-  State<RssFeedListView> createState() => _RssFeedListViewState();
-}
-
-class _RssFeedListViewState extends State<RssFeedListView> {
   @override
   Widget build(BuildContext context) {
     final rssFeedItems = List<RssFeedCard>.generate(
@@ -32,9 +29,7 @@ class _RssFeedListViewState extends State<RssFeedListView> {
         itemCount: rssFeedItems.length,
         itemBuilder: (context, index) => rssFeedItems[index],
       ),
-      floatingActionButton: const BookmarkFAB(
-        isLoggedIn: false,
-      ),
+      floatingActionButton: const BookmarkFAB(),
     );
   }
 }

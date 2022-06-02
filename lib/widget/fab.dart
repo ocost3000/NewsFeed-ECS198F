@@ -14,7 +14,7 @@ class BookmarkFAB extends StatefulWidget {
 
 class _BookmarkFABState extends State<BookmarkFAB> {
   User? _user;
-  late void Function() fireOnPressFunc;
+  late void Function() fireOnPressFunc = () => log("Uninitialized fireFunc");
   late String fireToolTip;
   late Icon fireButtonIcon;
 
@@ -25,6 +25,7 @@ class _BookmarkFABState extends State<BookmarkFAB> {
 
   void goToBookmarks() {
     log("Go to bookmarks");
+    Navigator.pushNamed(context, '/bookmarks');
   }
 
   static Future<UserCredential> signInWithGoogle() async {

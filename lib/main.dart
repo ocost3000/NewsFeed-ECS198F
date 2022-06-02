@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:news_feed/view/article_list_view.dart';
 import 'package:news_feed/view/rss_feed_list_view.dart';
 import 'package:news_feed/data/rss.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,7 +31,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: FlexThemeData.light(scheme: FlexScheme.aquaBlue),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.aquaBlue),
-      home: const MyHomePage(),
+      initialRoute: "/",
+      routes: {
+        '/': (context) => const MyHomePage(),
+        '/bookmarks': ((context) => ArticleListView(
+              feedName: "Favorites",
+              isFavorites: true,
+            )),
+      },
     );
   }
 }

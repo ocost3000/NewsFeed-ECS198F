@@ -27,7 +27,10 @@ class RssFeedCard extends StatelessWidget {
           print("Clicked RSS №$idx");
           // TODO: make feed-specific (with async request and loading page)
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const ArticleListView(rssFeed: "Articles");
+            return const ArticleListView(
+              feedName: "Articles",
+              isFavorites: false,
+            );
           }));
         },
         child: Card(

@@ -5,8 +5,11 @@ import 'package:news_feed/widget/article_card.dart';
 import 'package:news_feed/widget/fab.dart';
 
 class ArticleListView extends StatefulWidget {
-  final String rssFeed;
-  const ArticleListView({Key? key, required this.rssFeed}) : super(key: key);
+  final String feedName;
+  final bool isFavorites;
+  const ArticleListView(
+      {Key? key, required this.feedName, required this.isFavorites})
+      : super(key: key);
 
   @override
   State<ArticleListView> createState() => ArticleListViewState();
@@ -24,13 +27,13 @@ class ArticleListViewState extends State<ArticleListView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.rssFeed),
+        title: Text(widget.feedName),
       ),
       body: ListView.builder(
         itemCount: articleCards.length,
         itemBuilder: (context, index) => articleCards[index],
       ),
-      floatingActionButton: const BookmarkFAB(),
+      floatingActionButton: widget.isFavorites ? null : const BookmarkFAB(),
     );
   }
 }

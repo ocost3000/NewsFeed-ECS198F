@@ -4,7 +4,7 @@ class Favorite {
   final String link;
   final String description;
   final String imgURL;
-  final String pubDate;
+  final String pubString;
 
   Favorite(
       {required this.userId,
@@ -12,7 +12,7 @@ class Favorite {
       required this.link,
       required this.description,
       required this.imgURL,
-      required this.pubDate});
+      required this.pubString});
 
   Favorite.fromMap(Map<String, dynamic> result)
       : userId = result["userId"],
@@ -20,7 +20,7 @@ class Favorite {
         link = result["link"],
         description = result["description"],
         imgURL = result["imgURL"],
-        pubDate = result["pubDate"];
+        pubString = result["pubString"];
 
   Map<String, Object> toMap() {
     return {
@@ -29,7 +29,7 @@ class Favorite {
       'link': link,
       'description': description,
       'imgURL': imgURL,
-      'pubDate': pubDate,
+      'pubString': pubString,
     };
   }
 }

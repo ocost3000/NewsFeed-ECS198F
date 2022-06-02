@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/widget/fab.dart';
 import 'package:news_feed/widget/rss_feed_card.dart';
@@ -9,6 +12,7 @@ class RssFeedListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final rssFeedItems = List<RssFeedCard>.generate(
         4,
+        // TODO: Implement Rss Class
         (int index) => RssFeedCard(
             title: "UN News ${index + 1}",
             subtitle: "Global perspective, human stories ${index + 1}",
@@ -25,9 +29,7 @@ class RssFeedListView extends StatelessWidget {
         itemCount: rssFeedItems.length,
         itemBuilder: (context, index) => rssFeedItems[index],
       ),
-      floatingActionButton: const BookmarkFAB(
-        isLoggedIn: false,
-      ),
+      floatingActionButton: const BookmarkFAB(),
     );
   }
 }

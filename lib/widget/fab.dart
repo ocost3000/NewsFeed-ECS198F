@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:news_feed/services/firebase_helper.dart';
 
 class BookmarkFAB extends StatefulWidget {
+  /// FAB == Floating Action Button
   const BookmarkFAB({Key? key}) : super(key: key);
 
   @override

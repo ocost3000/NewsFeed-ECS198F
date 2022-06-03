@@ -1,3 +1,5 @@
+// OBSOLETE
+
 import 'package:news_feed/data/article.dart';
 
 class TestArticles {

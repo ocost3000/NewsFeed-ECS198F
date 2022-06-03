@@ -13,10 +13,8 @@ class ArticleListView extends StatefulWidget {
   final RSS? rssFeed;
   final SignInStatus status;
   final BookmarkFAB? bookmarkFab;
-  final String feedName;
   const ArticleListView(
       {Key? key,
-      required this.feedName,
       required this.rssFeed,
       required this.status,
       required this.bookmarkFab})
@@ -27,14 +25,14 @@ class ArticleListView extends StatefulWidget {
 }
 
 class ArticleListViewState extends State<ArticleListView> {
-  // NOTE: hardcoded testing articles
-
   Future<List<Article>?> _handleGenerating() async {
-    List<Article>? articles = null;
+    /// Retrieve articles asynchronously
+    List<Article>? articles;
     if (widget.rssFeed == null) {
-      // bookmarks
+      // TODO: bookmarks
       return articles;
     } else {
+      // from feed
       try {
         articles = await widget.rssFeed!.getFeeds();
       } catch (e) {
@@ -48,7 +46,9 @@ class ArticleListViewState extends State<ArticleListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.feedName),
+        title: widget.rssFeed == null
+            ? Text("Favorites")
+            : Text(widget.rssFeed!.title),
         actions: [
           widget.status,
         ],

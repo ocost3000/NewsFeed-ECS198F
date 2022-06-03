@@ -22,10 +22,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final List<RSS> _rssFeeds = TestRSSFeeds.rssFeeds;
-
   final SignInStatus _signInStatus = const SignInStatus();
-
   final BookmarkFAB _bookmarkFab = const BookmarkFAB();
 
   MyApp({Key? key}) : super(key: key);
@@ -43,7 +40,6 @@ class MyApp extends StatelessWidget {
               bookmarkFab: _bookmarkFab,
             ),
         '/bookmarks': ((context) => ArticleListView(
-              feedName: "Favorites",
               rssFeed: null,
               status: _signInStatus,
               bookmarkFab: null,

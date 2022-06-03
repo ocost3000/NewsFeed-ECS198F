@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
             ),
         '/bookmarks': ((context) => ArticleListView(
               feedName: "Favorites",
+              rssFeed: null,
               status: _signInStatus,
               bookmarkFab: null,
             )),

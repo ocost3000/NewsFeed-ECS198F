@@ -6,9 +6,10 @@ import 'package:news_feed/view/rss_feed_list_view.dart';
 import 'package:news_feed/data/rss.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:news_feed/testing/test_rss_feeds.dart';
+import 'package:news_feed/widget/fab.dart';
+import 'package:news_feed/widget/sign_in_status.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,11 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final List<RSS> rssFeeds = TestRSSFeeds.rssFeeds;
+  final List<RSS> _rssFeeds = TestRSSFeeds.rssFeeds;
+
+  final SignInStatus _signInStatus = const SignInStatus();
+
+  final BookmarkFAB _bookmarkFab = const BookmarkFAB();
 
   MyApp({Key? key}) : super(key: key);
 
@@ -33,10 +38,15 @@ class MyApp extends StatelessWidget {
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.aquaBlue),
       initialRoute: "/",
       routes: {
-        '/': (context) => const MyHomePage(),
+        '/': (context) => MyHomePage(
+              signInStatus: _signInStatus,
+              bookmarkFab: _bookmarkFab,
+            ),
         '/bookmarks': ((context) => ArticleListView(
               feedName: "Favorites",
-              isFavorites: true,
+              rssFeed: null,
+              status: _signInStatus,
+              bookmarkFab: null,
             )),
       },
     );
@@ -44,7 +54,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final SignInStatus signInStatus;
+  final BookmarkFAB bookmarkFab;
+  const MyHomePage(
+      {Key? key, required this.signInStatus, required this.bookmarkFab})
+      : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -56,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     FirebaseAuth.instance.authStateChanges().listen((user) => setState(() {
           _user = user;
@@ -74,6 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
       log("signed into google!");
     }
 
-    return (const RssFeedListView());
+    return RssFeedListView(
+      status: widget.signInStatus,
+      bookmarkFab: widget.bookmarkFab,
+    );
   }
 }

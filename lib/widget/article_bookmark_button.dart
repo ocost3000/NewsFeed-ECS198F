@@ -46,7 +46,6 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
 
   void _toggleBookmark() {
     setState(() {
-      // TODO: update Firebase
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
         bookmarkIcon = booked;

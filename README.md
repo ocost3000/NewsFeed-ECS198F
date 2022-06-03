@@ -2,15 +2,13 @@
 
 A new Flutter project.
 
-## Getting Started
+## Group Members
+ocostilla@ucdavis.edu, Omar Costilla, 916295653
 
-This project is a starting point for a Flutter application.
+rsax@ucdavis.edu, Rijul Saxena, 916034940
 
-A few resources to get you started if this is your first Flutter project:
+vplagov@ucdavis.edu, Vladimir Plagov, 918337881
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+koinguyen@ucdavis.edu, Khoi Nguyen, 919833517
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+hhtlin@ucdavis.edu, Teresa Lin, 919538689

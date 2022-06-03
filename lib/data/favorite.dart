@@ -14,6 +14,7 @@ class Favorite {
       required this.imgURL,
       required this.pubString});
 
+  // Database conversion functions below
   Favorite.fromMap(Map<String, dynamic> result)
       : userId = result["userId"],
         title = result["title"],

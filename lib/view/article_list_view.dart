@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/data/article.dart';
+import 'package:news_feed/services/database.dart';
 import 'package:news_feed/testing/test_articles.dart';
 import 'package:news_feed/widget/article_card.dart';
 import 'package:news_feed/widget/fab.dart';
@@ -28,11 +30,28 @@ class ArticleListView extends StatefulWidget {
 
 class ArticleListViewState extends State<ArticleListView> {
   // NOTE: hardcoded testing articles
+  final DataBase service = DataBase();
 
   Future<List<Article>?> _handleGenerating() async {
     List<Article>? articles = null;
     if (widget.rssFeed == null) {
       // bookmarks
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        print("Shouln't even get to this block! Loggin to see your favorites!");
+      } else {
+        var favoritesList = await service.getFavoritesByUserId(currentUser.uid);
+        articles = favoritesList.map((e) {
+          var favoriteArticle = Article(
+            title: e.title,
+            link: Uri.parse(e.link),
+            description: e.description,
+            imgURL: Uri.parse(e.imgURL),
+            pubDate: DateTime.parse(e.pubString),
+          );
+          return favoriteArticle;
+        }).toList();
+      }
       return articles;
     } else {
       try {

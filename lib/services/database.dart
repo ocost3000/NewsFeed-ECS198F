@@ -54,7 +54,7 @@ class DataBase {
           userId,
           article.title,
           article.description,
-          article.pubString
+          article.pubDate.toString()
         ]);
     return queryRes.map((e) => Favorite.fromMap(e)).toList();
   }
@@ -84,7 +84,7 @@ class DataBase {
           userId,
           article.title,
           article.description,
-          article.pubString
+          article.pubDate.toString()
         ]);
   }
 }

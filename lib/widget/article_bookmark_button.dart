@@ -28,6 +28,7 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
     User? currentUser = FirebaseAuth.instance.currentUser;
     updateBookmarkIcon(currentUser);
     //listener in case user signs out and rerender won't happen
+    //for example if already in article list view
     FirebaseAuth.instance
         .authStateChanges()
         .listen((currentUser) => setState(() {
@@ -74,9 +75,9 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
                   link: widget.article.link.toString(),
                   description: widget.article.description,
                   imgURL: widget.article.imgURL.toString(),
-                  pubString: widget.article.pubString))
+                  pubString: widget.article.pubDate.toString()))
               .then((value) {
-            print("Should store article with title: ${widget.article.title}");
+            print("Should store article with date: ${widget.article.pubString}");
           });
         } else {
           bookmarkIcon = unBooked;
@@ -84,7 +85,7 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
           service
               .deleteFavoriteByArticleAndUserId(widget.article, currentUser.uid)
               .then((value) {
-            print("Should delete article with title: ${widget.article.title}");
+            print("Should delete article with date: ${widget.article.pubString}");
           });
         }
         service.getAllFavorites().then((allfavorites) {

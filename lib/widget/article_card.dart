@@ -10,7 +10,6 @@ import 'article_bookmark_button.dart';
 class ArticleCard extends StatelessWidget {
   /// Widget (View) for Card Item
   final Article article;
-
   const ArticleCard({Key? key, required this.article}) : super(key: key);
 
   @override
@@ -86,7 +85,6 @@ class ArticleCard extends StatelessWidget {
                               ),
                               ArticleBookmarkButton(
                                 article: article,
-                                authUserId: 999,
                               ),
                             ],
                           ),

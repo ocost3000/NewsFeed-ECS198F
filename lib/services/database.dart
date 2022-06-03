@@ -11,7 +11,7 @@ class DataBase {
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute(
-          "CREATE TABLE favorites(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, title TEXT NOT NULL, link TEXT NOT NULL, description TEXT NOT NULL, imgURL TEXT NOT NULL, pubString TEXT NOT NULL)",
+          "CREATE TABLE favorites(id INTEGER PRIMARY KEY, userId TEXT NOT NULL, title TEXT NOT NULL, link TEXT NOT NULL, description TEXT NOT NULL, imgURL TEXT NOT NULL, pubString TEXT NOT NULL)",
         );
       },
     );
@@ -35,7 +35,7 @@ class DataBase {
     return queryRes.map((e) => Favorite.fromMap(e)).toList();
   }
 
-  Future<List<Favorite>> getFavoritesByUserId(int userId) async {
+  Future<List<Favorite>> getFavoritesByUserId(String userId) async {
     final Database db = await initDB();
     final List<Map<String, Object?>> queryRes = await db.query(
       'favorites',
@@ -46,7 +46,7 @@ class DataBase {
   }
 
   Future<List<Favorite>> getFavoriteByArticleAndUserId(
-      Article article, int userId) async {
+      Article article, String userId) async {
     final Database db = await initDB();
     final List<Map<String, Object?>> queryRes = await db.query('favorites',
         where: "userId = ? and title = ? and description = ? and pubString = ?",
@@ -66,7 +66,7 @@ class DataBase {
     );
   }
 
-  Future<void> deleteFavoriteByUserId(int userId) async {
+  Future<void> deleteFavoriteByUserId(String userId) async {
     final db = await initDB();
     await db.delete(
       'favorites',
@@ -76,7 +76,7 @@ class DataBase {
   }
 
   Future<void> deleteFavoriteByArticleAndUserId(
-      Article article, int userId) async {
+      Article article, String userId) async {
     final db = await initDB();
     await db.delete('favorites',
         where: "userId = ? and title = ? and description = ? and pubString = ?",

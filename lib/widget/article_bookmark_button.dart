@@ -6,11 +6,9 @@ import 'package:news_feed/services/database.dart';
 
 class ArticleBookmarkButton extends StatefulWidget {
   final Article article;
-  final int authUserId;
   const ArticleBookmarkButton({
     Key? key,
-    required this.article,
-    required this.authUserId,
+    required this.article
   }) : super(key: key);
 
   @override

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/data/article.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -83,7 +84,10 @@ class ArticleCard extends StatelessWidget {
                                   color: Colors.grey[500],
                                 ),
                               ),
-                              ArticleBookmarkButton(article: article, authUserId: 999,),
+                              ArticleBookmarkButton(
+                                article: article,
+                                authUserId: 999,
+                              ),
                             ],
                           ),
                         ),

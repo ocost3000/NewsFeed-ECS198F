@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/data/favorite.dart';
 import 'package:news_feed/data/article.dart';
@@ -6,9 +7,11 @@ import 'package:news_feed/services/database.dart';
 class ArticleBookmarkButton extends StatefulWidget {
   final Article article;
   final int authUserId;
-  const ArticleBookmarkButton(
-      {Key? key, required this.article, required this.authUserId})
-      : super(key: key);
+  const ArticleBookmarkButton({
+    Key? key,
+    required this.article,
+    required this.authUserId,
+  }) : super(key: key);
 
   @override
   State<ArticleBookmarkButton> createState() => _ArticleBookmarkButtonState();
@@ -47,8 +50,19 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
   void _toggleBookmark() {
     setState(() {
       // TODO: update Firebase
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        print("Should log in to use bookmarks");
+      } else {
+        print("UID: ${currentUser.uid}");
+      }
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
+        // if (widget.currentUserId == null) {
+        //   print("Should log in to use bookmarks");
+        // } else {
+        //   print("UID: ${widget.currentUserId}");
+        // }
         bookmarkIcon = booked;
         //insert into DB
         service

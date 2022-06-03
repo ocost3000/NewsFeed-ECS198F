@@ -6,10 +6,8 @@ import 'package:news_feed/services/database.dart';
 
 class ArticleBookmarkButton extends StatefulWidget {
   final Article article;
-  const ArticleBookmarkButton({
-    Key? key,
-    required this.article
-  }) : super(key: key);
+  const ArticleBookmarkButton({Key? key, required this.article})
+      : super(key: key);
 
   @override
   State<ArticleBookmarkButton> createState() => _ArticleBookmarkButtonState();
@@ -26,61 +24,76 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
 
   @override
   void initState() {
-    // DONE???:
-    // The values here would be initialized with data from Firebase, letting us
-    // know which ones are already bookmarked and which one's arent
     super.initState();
-    service
-        .getFavoriteByArticleAndUserId(widget.article, widget.authUserId)
-        .then((value) {
-      setState(() {
-        if (value.isEmpty) {
-          isBookmarked = false;
-          bookmarkIcon = unBooked;
-        } else {
-          isBookmarked = true;
-          bookmarkIcon = booked;
-        }
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    updateBookmarkIcon(currentUser);
+    //listener in case user signs out and rerender won't happen
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((currentUser) => setState(() {
+              updateBookmarkIcon(currentUser);
+            }));
+  }
+
+  void updateBookmarkIcon(User? currentUser) {
+    if (currentUser == null) {
+      print("Should log in to use bookmarks");
+      isBookmarked = false;
+      bookmarkIcon = unBooked;
+    } else {
+      service
+          .getFavoriteByArticleAndUserId(widget.article, currentUser.uid)
+          .then((value) {
+        setState(() {
+          if (value.isEmpty) {
+            isBookmarked = false;
+            bookmarkIcon = unBooked;
+          } else {
+            isBookmarked = true;
+            bookmarkIcon = booked;
+          }
+        });
       });
-    });
+    }
   }
 
   void _toggleBookmark() {
     setState(() {
-      // TODO: update Firebase
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
         print("Should log in to use bookmarks");
       } else {
-        print("UID: ${currentUser.uid}");
-      }
-      isBookmarked = !isBookmarked;
-      if (isBookmarked) {
-        // if (widget.currentUserId == null) {
-        //   print("Should log in to use bookmarks");
-        // } else {
-        //   print("UID: ${widget.currentUserId}");
-        // }
-        bookmarkIcon = booked;
-        //insert into DB
-        service
-            .putFavorite(Favorite(
-                userId: widget.authUserId,
-                title: widget.article.title,
-                link: widget.article.link.toString(),
-                description: widget.article.description,
-                imgURL: widget.article.imgURL.toString(),
-                pubString: widget.article.pubString))
-            .then((value) {
-          print("Should insert row №: $value");
-        });
-      } else {
-        bookmarkIcon = unBooked;
-        //remove from DB
-        service
-            .deleteFavoriteByArticleAndUserId(widget.article, widget.authUserId)
-            .then((value) {
-          print("Should delete unbooked article");
+        isBookmarked = !isBookmarked;
+        if (isBookmarked) {
+          bookmarkIcon = booked;
+          //insert into DB
+          service
+              .putFavorite(Favorite(
+                  userId: currentUser.uid,
+                  title: widget.article.title,
+                  link: widget.article.link.toString(),
+                  description: widget.article.description,
+                  imgURL: widget.article.imgURL.toString(),
+                  pubString: widget.article.pubString))
+              .then((value) {
+            print("Should store article with title: ${widget.article.title}");
+          });
+        } else {
+          bookmarkIcon = unBooked;
+          //remove from DB
+          service
+              .deleteFavoriteByArticleAndUserId(widget.article, currentUser.uid)
+              .then((value) {
+            print("Should delete article with title: ${widget.article.title}");
+          });
+        }
+        service.getAllFavorites().then((allfavorites) {
+          for (var fav in allfavorites) {
+            print(fav.title);
+            print(fav.description);
+            print("UserId: ${fav.userId}");
+            print(fav.pubString);
+          }
         });
       }
     });

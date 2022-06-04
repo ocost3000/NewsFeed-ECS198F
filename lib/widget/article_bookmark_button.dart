@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/data/favorite.dart';
 import 'package:news_feed/data/article.dart';
@@ -64,6 +65,10 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
       if (currentUser == null) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("Please, sign in to use bookmarks!")));
+      } else if (kIsWeb) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text(
+                "Bookmarks are not available on Web! Try again using your phone!")));
       } else {
         isBookmarked = !isBookmarked;
         if (isBookmarked) {

@@ -62,7 +62,8 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
     setState(() {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
-        print("Should log in to use bookmarks");
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: const Text("Please, sign in to use bookmarks!")));
       } else {
         isBookmarked = !isBookmarked;
         if (isBookmarked) {
@@ -77,7 +78,8 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
                   imgURL: widget.article.imgURL.toString(),
                   pubString: widget.article.pubDate.toString()))
               .then((value) {
-            print("Should store article with date: ${widget.article.pubString}");
+            print(
+                "Should store article with date: ${widget.article.pubString}");
           });
         } else {
           bookmarkIcon = unBooked;
@@ -85,7 +87,8 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
           service
               .deleteFavoriteByArticleAndUserId(widget.article, currentUser.uid)
               .then((value) {
-            print("Should delete article with date: ${widget.article.pubString}");
+            print(
+                "Should delete article with date: ${widget.article.pubString}");
           });
         }
         service.getAllFavorites().then((allfavorites) {

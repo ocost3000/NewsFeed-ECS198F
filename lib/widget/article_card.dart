@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/data/article.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,7 +10,6 @@ import 'article_bookmark_button.dart';
 class ArticleCard extends StatelessWidget {
   /// Widget (View) for Card Item
   final Article article;
-
   const ArticleCard({Key? key, required this.article}) : super(key: key);
 
   @override
@@ -83,7 +83,9 @@ class ArticleCard extends StatelessWidget {
                                   color: Colors.grey[500],
                                 ),
                               ),
-                              ArticleBookmarkButton(article: article, authUserId: 999,),
+                              ArticleBookmarkButton(
+                                article: article,
+                              ),
                             ],
                           ),
                         ),

@@ -21,7 +21,7 @@ https://drive.google.com/file/d/1WHucBt19CyIGAOfRuqmjVTQIF_2UAjE0/view?usp=shari
 
 ### Mini Tech Demo
 
-https://drive.google.com/file/d/10-Xgbu1vOE6LAkKcokv0FcxSb5pJuc6H/view?usp=sharing
+https://drive.google.com/file/d/16w7IZbYAGhQT4UY5IpG5dxEgeJf91fy0/view?usp=sharing
 
 ### Slides
 

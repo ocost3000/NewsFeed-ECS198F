@@ -33,10 +33,8 @@ class RssFeedCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           log("Clicked RSS #$idx");
-          // TODO: make feed-specific (with async request and loading page)
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return ArticleListView(
-              feedName: "Articles",
               rssFeed: rssFeed,
               status: status,
               bookmarkFab: bookmarkFab,
@@ -52,6 +50,9 @@ class RssFeedCard extends StatelessWidget {
               Image.asset('assets/images/rss.png',
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.contain),
+              // Below is code that was used to retrieve image from network
+              // not currently used
+              //
               // Image.network(
               //   imageUrl,
               //   width: MediaQuery.of(context).size.width,
@@ -63,7 +64,7 @@ class RssFeedCard extends StatelessWidget {
               //   },
               // ),
               ListTile(
-                leading: Icon(Icons.rss_feed_outlined),
+                leading: const Icon(Icons.rss_feed_outlined),
                 title: Text(rssFeed.title),
               ),
             ],

@@ -15,10 +15,8 @@ class ArticleListView extends StatefulWidget {
   final RSS? rssFeed;
   final SignInStatus status;
   final BookmarkFAB? bookmarkFab;
-  final String feedName;
   const ArticleListView(
       {Key? key,
-      required this.feedName,
       required this.rssFeed,
       required this.status,
       required this.bookmarkFab})
@@ -47,9 +45,10 @@ class ArticleListViewState extends State<ArticleListView> {
   }
 
   Future<List<Article>?> _handleGenerating() async {
-    List<Article>? articles = null;
+    /// Retrieve articles asynchronously
+    List<Article>? articles;
     if (widget.rssFeed == null) {
-      // bookmarks
+
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
         print("Shouln't even get to this block! Loggin to see your favorites!");
@@ -66,8 +65,10 @@ class ArticleListViewState extends State<ArticleListView> {
           return favoriteArticle;
         }).toList();
       }
+
       return articles;
     } else {
+      // from feed
       try {
         articles = await widget.rssFeed!.getFeeds();
       } catch (e) {
@@ -81,7 +82,9 @@ class ArticleListViewState extends State<ArticleListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.feedName),
+        title: widget.rssFeed == null
+            ? Text("Favorites")
+            : Text(widget.rssFeed!.title),
         actions: [
           widget.status,
         ],

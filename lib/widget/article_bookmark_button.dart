@@ -57,13 +57,28 @@ class _ArticleBookmarkButtonState extends State<ArticleBookmarkButton> {
       });
     }
   }
-
+  
   void _toggleBookmark() {
     setState(() {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("Please, sign in to use bookmarks!")));
+      isBookmarked = !isBookmarked;
+      if (isBookmarked) {
+        bookmarkIcon = booked;
+        //insert into DB
+        service
+            .putFavorite(Favorite(
+                userId: widget.authUserId,
+                title: widget.article.title,
+                link: widget.article.link.toString(),
+                description: widget.article.description,
+                imgURL: widget.article.imgURL.toString(),
+                pubString: widget.article.pubString))
+            .then((value) {
+          print("Should insert row №: $value");
+        });
       } else {
         isBookmarked = !isBookmarked;
         if (isBookmarked) {

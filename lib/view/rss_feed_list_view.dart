@@ -21,7 +21,6 @@ class RssFeedListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final rssFeedItems = List<RssFeedCard>.generate(
         feeds.length,
-        // TODO: Implement Rss Class
         (int index) => RssFeedCard(
               idx: index,
               rssFeed: feeds[index],

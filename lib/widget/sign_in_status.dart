@@ -13,8 +13,8 @@ class SignInStatus extends StatefulWidget {
 
 class _SignInStatusState extends State<SignInStatus> {
   User? _user;
-  late Widget _fireIcon;
-  late Function() _fireOnPressed = () => log("Uninitialied sign in button");
+  late Widget _icon = const Icon(Icons.circle);
+  late Function() _onPressed = () => log("Uninitialied sign in button");
 
   Future<String?> _signOutPrompt() async {
     log("Signing out");
@@ -50,25 +50,25 @@ class _SignInStatusState extends State<SignInStatus> {
     FirebaseAuth.instance.authStateChanges().listen((user) => setState(() {
           _user = user;
           if (_user == null) {
-            _fireIcon = const Icon(Icons.person_add);
-            _fireOnPressed = _signInPrompt;
+            _icon = const Icon(Icons.person_add);
+            _onPressed = _signInPrompt;
           } else {
             // not sure if all users will have photo url or if only those who
             // uploaded a profile pic
             // so I will null check anywyas
             String? url = FirebaseAuth.instance.currentUser!.photoURL;
             if (url == null) {
-              _fireIcon = const Icon(Icons.person);
+              _icon = const Icon(Icons.person);
             } else {
-              _fireIcon = CircleAvatar(backgroundImage: NetworkImage(url));
+              _icon = CircleAvatar(backgroundImage: NetworkImage(url));
             }
-            _fireOnPressed = _signOutPrompt;
+            _onPressed = _signOutPrompt;
           }
         }));
   }
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: _fireOnPressed, icon: _fireIcon);
+    return IconButton(onPressed: _onPressed, icon: _icon);
   }
 }

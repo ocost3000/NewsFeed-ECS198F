@@ -14,6 +14,7 @@ class RSS {
   RSS({required this.feedUrl, required this.title});
 
   Future<RssFeed?> _loadFeed() async {
+    /// Get the rssFeed file from web
     try {
       final client = http.Client();
       final response = await client.get(Uri.parse(feedUrl));
@@ -29,6 +30,7 @@ class RSS {
   }
 
   Future<List<Article>?> getFeeds() async {
+    /// use rssFeed from web to get articles within its content
     try {
       RssFeed? body = await _loadFeed();
       numArticles = body!.items!.length.toInt();

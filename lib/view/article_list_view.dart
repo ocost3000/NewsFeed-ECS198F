@@ -32,6 +32,20 @@ class ArticleListViewState extends State<ArticleListView> {
   // NOTE: hardcoded testing articles
   final DataBase service = DataBase();
 
+  @override
+  void initState() {
+    super.initState();
+    //listener in case user signs out and rerender won't happen
+    //for example if already in article list view
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((currentUser) => setState(() {
+              if (currentUser == null && widget.rssFeed == null) {
+                Navigator.pop(context);
+              }
+            }));
+  }
+
   Future<List<Article>?> _handleGenerating() async {
     List<Article>? articles = null;
     if (widget.rssFeed == null) {

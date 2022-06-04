@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/services/firebase_helper.dart';
 
@@ -23,8 +24,14 @@ class _BookmarkFABState extends State<BookmarkFAB> {
   }
 
   void _goToBookmarks() {
-    log("Go to bookmarks");
-    Navigator.pushNamed(context, '/bookmarks');
+    if (kIsWeb) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+              "Bookmarks are not available on Web! Try again using your phone!")));
+    } else {
+      log("Go to bookmarks");
+      Navigator.pushNamed(context, '/bookmarks');
+    }
   }
 
   @override

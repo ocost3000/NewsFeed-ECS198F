@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_feed/data/article.dart';
+import 'package:news_feed/services/database.dart';
 import 'package:news_feed/testing/test_articles.dart';
 import 'package:news_feed/widget/article_card.dart';
 import 'package:news_feed/widget/fab.dart';
@@ -25,11 +27,45 @@ class ArticleListView extends StatefulWidget {
 }
 
 class ArticleListViewState extends State<ArticleListView> {
+  // NOTE: hardcoded testing articles
+  final DataBase service = DataBase();
+
+  @override
+  void initState() {
+    super.initState();
+    //listener in case user signs out and rerender won't happen
+    //for example if already in article list view
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((currentUser) => setState(() {
+              if (currentUser == null && widget.rssFeed == null) {
+                Navigator.pop(context);
+              }
+            }));
+  }
+
   Future<List<Article>?> _handleGenerating() async {
     /// Retrieve articles asynchronously
     List<Article>? articles;
     if (widget.rssFeed == null) {
-      // TODO: bookmarks
+
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        print("Shouln't even get to this block! Loggin to see your favorites!");
+      } else {
+        var favoritesList = await service.getFavoritesByUserId(currentUser.uid);
+        articles = favoritesList.map((e) {
+          var favoriteArticle = Article(
+            title: e.title,
+            link: Uri.parse(e.link),
+            description: e.description,
+            imgURL: Uri.parse(e.imgURL),
+            pubDate: DateTime.parse(e.pubString),
+          );
+          return favoriteArticle;
+        }).toList();
+      }
+
       return articles;
     } else {
       // from feed
@@ -66,7 +102,9 @@ class ArticleListViewState extends State<ArticleListView> {
                   arts.length, (int index) => ArticleCard(article: arts[index]),
                   growable: true);
               bodyWidget = ListView.builder(
-                  itemBuilder: (context, index) => cards[index]);
+                itemCount: cards.length,
+                itemBuilder: (context, index) => cards[index],
+              );
             } else if (snapshot.hasError) {
               bodyWidget = Column(children: <Widget>[
                 const Icon(

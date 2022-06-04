@@ -1,5 +1,5 @@
 class Favorite {
-  final int userId;
+  final String userId;
   final String title;
   final String link;
   final String description;

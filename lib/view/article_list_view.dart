@@ -85,7 +85,9 @@ class ArticleListViewState extends State<ArticleListView> {
                   arts.length, (int index) => ArticleCard(article: arts[index]),
                   growable: true);
               bodyWidget = ListView.builder(
-                  itemBuilder: (context, index) => cards[index]);
+                itemCount: cards.length,
+                itemBuilder: (context, index) => cards[index],
+              );
             } else if (snapshot.hasError) {
               bodyWidget = Column(children: <Widget>[
                 const Icon(
